@@ -70,6 +70,20 @@ async function run() {
       const result = await orderCollection.deleteOne(query);
       res.send(result)
     })
+
+    //Update Order Approval Status
+    app.patch('/orders/:id', async(req, res) => {
+      const id = req.params.id;
+      const status = req.body.status
+      const query = {_id : ObjectId(id)}
+      const updatedDoc = {
+        $set : {
+          status: status
+        }
+      }
+      const result = await orderCollection.updateOne(query, updatedDoc)
+      res.send(result);
+    })
   }
   finally {
 
